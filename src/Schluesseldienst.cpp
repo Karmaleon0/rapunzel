@@ -1,5 +1,5 @@
 #include <Servo.h>
-#include "WiFiS3.h"
+#include "WiFi.h"
 
 // WiFi-Konfiguration
 //const char ssid[] = "Rapunzel";
