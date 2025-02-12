@@ -159,29 +159,9 @@ void Blink() {
 }
 
 
-void setup() {
-  Serial.begin(115200);
 
-  // LED konfigurieren
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
 
-  // Lichtschranke konfigurieren
-  pinMode(lichtschrankePin, INPUT);
-
-  // WiFi konfigurieren
-  Serial.println("Access Point wird erstellt...");
-  if (WiFi.beginAP(ssid, pass) != WL_AP_LISTENING) {
-    Serial.println("Fehler beim Erstellen des Access Points!");
-    while (true);
-  }
-  Server.begin();
-  Serial.println("Access Point erfolgreich erstellt.");
-  Serial.print("IP-Adresse: ");
-  Serial.println(WiFi.localIP());
-}
-
-void loop() {
+void loopschluesseldienst() {
   handleWiFiClient();
 
   if (!kalibriert) {
