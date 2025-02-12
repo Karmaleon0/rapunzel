@@ -47,41 +47,6 @@ void bewegeServo(int Richtungundgeschwindigkeit, int dauer) {
   Serial.println(dauer);
 }
 
-void setup() {
-  Serial.begin(115200);
-
-  // LED konfigurieren
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
-
-  // Lichtschranke konfigurieren
-  pinMode(lichtschrankePin, INPUT);
-
-  // WiFi konfigurieren
-  Serial.println("Access Point wird erstellt...");
-  if (WiFi.beginAP(ssid, pass) != WL_AP_LISTENING) {
-    Serial.println("Fehler beim Erstellen des Access Points!");
-    while (true);
-  }
-  server.begin();
-  Serial.println("Access Point erfolgreich erstellt.");
-  Serial.print("IP-Adresse: ");
-  Serial.println(WiFi.localIP());
-}
-
-void loop() {
-  handleWiFiClient();
-
-  if (!kalibriert) {
-    kalibrieren();
-  } else if (!speedKalibriert) {
-    kalibriereRichtungundgeschwindigkeit();
-  } else if (throwKey) {
-    werfeSchluessel();
-  }
-  roundscounting();
-}
-
 void handleWiFiClient() {
   WiFiClient client = server.available();
   if (!client) return;
@@ -192,3 +157,40 @@ void Blink() {
     delay(100);
   }
 }
+
+
+void setup() {
+  Serial.begin(115200);
+
+  // LED konfigurieren
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+
+  // Lichtschranke konfigurieren
+  pinMode(lichtschrankePin, INPUT);
+
+  // WiFi konfigurieren
+  Serial.println("Access Point wird erstellt...");
+  if (WiFi.beginAP(ssid, pass) != WL_AP_LISTENING) {
+    Serial.println("Fehler beim Erstellen des Access Points!");
+    while (true);
+  }
+  Server.begin();
+  Serial.println("Access Point erfolgreich erstellt.");
+  Serial.print("IP-Adresse: ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  handleWiFiClient();
+
+  if (!kalibriert) {
+    kalibrieren();
+  } else if (!speedKalibriert) {
+    kalibriereRichtungundgeschwindigkeit();
+  } else if (throwKey) {
+    werfeSchluessel();
+  }
+  roundscounting();
+}
+
