@@ -1,42 +1,24 @@
 #include <Arduino.h>
 #include "OTAHandler.h"
 #include "Wifi.h"
-#include "Schluesseldienst.cpp"
+#include "KeyService.h"
 
 OTAHandler otaHandler;
 Wifi wifi;
 
-void setupschluesseldienst() {
-  Serial.begin(115200);
-
-  // LED konfigurieren
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
-
-  // Lichtschranke konfigurieren
-  pinMode(lichtschrankePin, INPUT);
-
-  // WiFi konfigurieren
-  Serial.println("Access Point wird erstellt...");
-  if (WiFi.beginAP(ssid, pass) != WL_AP_LISTENING) {
-    Serial.println("Fehler beim Erstellen des Access Points!");
-    while (true);
-  }
-  Server.begin();
-  Serial.println("Access Point erfolgreich erstellt.");
-  Serial.print("IP-Adresse: ");
-  Serial.println(WiFi.localIP());
-}
+#define SERVO_PIN 6
+#define SENSOR_PIN 3
+KeyService keyService(SERVO_PIN, SENSOR_PIN, LED_BUILTIN);
 
 void setup() {
+  Serial.begin(115200);
   otaHandler.setup();
   wifi.setup();
-  setupschluesseldienst();
-  
+  keyService.setup();
 }
 
 void loop() {
   otaHandler.loop();
   wifi.loop();
-  Schluesseldienst();
+  keyService.loop();
 }
