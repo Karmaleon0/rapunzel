@@ -6,8 +6,8 @@
 OTAHandler otaHandler;
 Wifi wifi;
 
-#define SERVO_PIN 6
-#define SENSOR_PIN 3
+#define SERVO_PIN 2 //Pin 4 but GPIO 2
+#define SENSOR_PIN 14 //pin 5 but GPIO 14
 KeyService keyService(SERVO_PIN, SENSOR_PIN, LED_BUILTIN);
 
 void setup() {
