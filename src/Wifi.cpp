@@ -1,10 +1,10 @@
 #include "Wifi.h"
 
-IPAddress ip(192, 168, 4, 2);
-IPAddress gateway(192, 168, 4, 1);
-IPAddress subnet(255, 255, 255, 0);
+//IPAddress ip(192, 168, 4, 2);
+//IPAddress gateway(192, 168, 4, 1);
+//IPAddress subnet(255, 255, 255, 0);
 
-const char *Ssid = "Rapunzel2";
+const char *Ssid = "Rapunzel";
 const char *Password = "rapunzel";
 
 Wifi::Wifi(): dnsServer()
@@ -13,7 +13,7 @@ Wifi::Wifi(): dnsServer()
 
 void Wifi::setup()
 {
-  WiFi.config(ip, gateway, subnet);
+  //WiFi.config(ip, gateway, subnet);
   WiFi.softAP(Ssid, Password);
   dnsServer.start(53, "*", WiFi.softAPIP());
   Serial.print("AP IP address: ");
