@@ -1,7 +1,7 @@
 #include "ServoController.h"
 
-ServoController::ServoController(int servoPin, int stopAngle)
-  : _servoPin(servoPin), _stopAngle(stopAngle) {
+ServoController::ServoController(int servoPin, int sensorPin, int stopAngle)
+  : _servoPin(servoPin), _sensorPin(sensorPin), _stopAngle(stopAngle) {
   _task.active = false;
   _task.cooling = false;
 }
@@ -13,7 +13,9 @@ void ServoController::setup() {
 void ServoController::loop() {
   if (_task.active) {
     if (!_task.cooling) {
-      if (millis() - _task.startTime >= _task.duration) {
+      if ((_task.duration == (unsigned long)-1 && digitalRead(_sensorPin) == HIGH)
+         || (_task.duration != (unsigned long)-1 && (millis() - _task.startTime >= _task.duration))
+      ) {
         _servo.write(_stopAngle);
         _task.cooling = true;
         _task.cooldownStartTime = millis();
@@ -31,6 +33,9 @@ void ServoController::loop() {
 }
 
 void ServoController::startTask(int targetAngle, unsigned long duration) {
+  if (duration == (unsigned long)-1 && digitalRead(_sensorPin) == HIGH) {
+    return;
+  }
   if (!_task.active) {
     _servo.attach(_servoPin);
     _servo.write(targetAngle);

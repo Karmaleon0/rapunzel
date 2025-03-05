@@ -7,7 +7,7 @@
 class ServoController
 {
 public:
-    ServoController(int servoPin, int stopAngle = 90);
+    ServoController(int servoPin, int sensorPin, int stopAngle = 90);
 
     void setup();
 
@@ -19,6 +19,7 @@ public:
 
 private:
     int _servoPin;
+    int _sensorPin;
     int _stopAngle;
     Servo _servo;
 
