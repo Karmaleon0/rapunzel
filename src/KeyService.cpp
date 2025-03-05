@@ -36,7 +36,7 @@ void KeyService::loop() {
   }
   else if (_currentMode == NULLING) {
     if (!_servoController.isBusy()) {
-      _servoController.startTask(150, 800);
+      _servoController.startTask(150, 600);
       _currentMode = LOCKING;
     }
   }
